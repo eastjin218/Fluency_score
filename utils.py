@@ -51,6 +51,7 @@ class Preprocess():
             name = os.path.split(i)[1]
             sf.write('%s/audio.amp.nr/%s'%(self.outdir, name), noise_can ,ch_sr, format='WAV', endian='LITTLE')
 
+
 def convert_wav(audio_path, out_path):
     os.makedirs(out_path, exist_ok=True)
     name = os.path.basename(audio_path)
@@ -60,8 +61,7 @@ def convert_wav(audio_path, out_path):
 
 
 class Flu_score():
-#    def __init__(self):
-#        pass
+
     def compare_audio_mfcc(self, st_au, st_sr, in_au, in_sr): 
         st_stft = librosa.stft(st_au, n_fft=2048, win_length=2048, hop_length=512)
         in_stft = librosa.stft(in_au, n_fft=2048, win_length=2048, hop_length=512)
@@ -83,8 +83,8 @@ class Flu_score():
         
         st_name = os.path.basename(stand_file)
         st_name = st_name.split('.')[0]
-        in_name = os.path.basename(input_file)
-        in_name = in_name.split('_')[0]
+        in_name1 = os.path.basename(input_file)
+        in_name = in_name1.split('_')[0]
 
         if st_name == in_name:
             score_med = (len(self.st_au)/self.st_sr)*sec_range
@@ -94,11 +94,11 @@ class Flu_score():
             print(check_score)
             
             if check_score <= score_low_b:
-                return print('Very good')
+                return print('Very good : '+in_name1)
             if score_low_b < check_score < score_high_b:
-                return print('Good')
+                return print('Good : '+in_name1)
             if check_score >= score_high_b:
-                return print('bad') 
+                return print('bad : '+in_name1) 
         else:
             print('different file name')
 
